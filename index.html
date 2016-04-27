@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- http://www.w3schools.com/angular/angular_application.asp -->
+	<link rel="stylesheet" href="bootstrap.min.css" type="text/css">
+	<script src="angular.min.js"></script>
+	<script>
+	var app = angular.module('myShoppingList',[]);
+	app.controller('myCtrl', function($scope) {
+		$scope.products = ['Milk', 'Bread', 'Cheese', 'Banana'];
+		
+		$scope.addItem = function() {
+			$scope.errormsg = "";
+			if (!$scope.addMe) {
+				$scope.errormsg = "Nada!";
+				return;
+			}
+			if ($scope.products.indexOf($scope.addMe) == -1) {
+				$scope.products.push($scope.addMe);
+			} else {
+				$scope.errormsg = "The item already exists";
+			}
+
+		};
+
+		$scope.removeItem = function(index) {
+			$scope.products.splice(index,1);
+		};
+	});
+
+	</script>
+
+</head>
+
+<body ng-app="myShoppingList" ng-controller="myCtrl">
+	<ul>
+		<li ng-repeat="p in products">{{ p }} <span ng-click="removeItem($index)">&times;</span></li>
+	</ul>
+	<input type="text" ng-model="addMe">
+	<button ng-click="addItem()">ADD</button>
+	<p>{{errormsg}}</p>
+</body>
+</html>
